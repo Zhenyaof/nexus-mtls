@@ -1,0 +1,10 @@
+flowchart LR
+    CA["Private Certificate Authority"]
+    C["Client: curl or browser"]
+    N["Nginx reverse proxy: HTTPS port 8443"]
+    X["Nexus Repository OSS: internal port 8081"]
+
+    CA -. signs client certificate .-> C
+    CA -. signs server certificate .-> N
+    C -->|HTTPS with client certificate| N
+    N -->|HTTP over private Docker network| X
