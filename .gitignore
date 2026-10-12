@@ -1,0 +1,17 @@
+# Private keys and certificates
+certs/*.key
+certs/*.pem
+certs/*.crt
+certs/*.p12
+certs/*.pfx
+
+# Environment secrets
+.env
+.env.*
+
+# Allow example environment files
+!.env.example
+
+# Generated data and logs
+data/
+logs/
