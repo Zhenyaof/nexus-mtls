@@ -33,3 +33,6 @@ certs/private/
 # Runtime data
 data/
 logs/
+
+# Never commit generated certificate material
+/certs/
