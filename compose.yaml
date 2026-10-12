@@ -1,0 +1,44 @@
+services:
+  nexus:
+    image: sonatype/nexus3:3.96.3
+    container_name: nexus
+    restart: unless-stopped
+    environment:
+      INSTALL4J_ADD_VM_PARAMS: >-
+        -Xms1024m
+        -Xmx1024m
+        -XX:MaxDirectMemorySize=1024m
+        -Djava.util.prefs.userRoot=/nexus-data/javaprefs
+    volumes:
+      - nexus-data:/nexus-data
+    expose:
+      - "8081"
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+    networks:
+      - nexus-net
+
+  nginx:
+    image: nginx:1.28-alpine
+    container_name: nexus-nginx
+    restart: unless-stopped
+    depends_on:
+      - nexus
+    ports:
+      - "8443:443"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./certs/server/server.crt:/etc/nginx/certs/server.crt:ro
+      - ./certs/server/server.key:/etc/nginx/certs/server.key:ro
+      - ./certs/ca/ca.crt:/etc/nginx/client-ca/ca.crt:ro
+    networks:
+      - nexus-net
+
+volumes:
+  nexus-data:
+
+networks:
+  nexus-net:
+    driver: bridge
