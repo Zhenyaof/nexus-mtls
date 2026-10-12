@@ -15,3 +15,21 @@ certs/*.pfx
 # Generated data and logs
 data/
 logs/
+
+# Private keys and generated certificates
+certs/*.key
+certs/*.pem
+certs/*.crt
+certs/*.csr
+certs/*.srl
+certs/*.p12
+certs/*.pfx
+
+# Generated certificate configuration and secrets
+certs/private/
+.env
+.env.*
+
+# Runtime data
+data/
+logs/
